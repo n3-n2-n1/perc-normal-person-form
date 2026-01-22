@@ -1,0 +1,53 @@
+<div class="space-y-8">
+  <div class="text-center animate-slide-up">
+    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-600 to-purple-500 rounded-full mb-4 shadow-lg shadow-purple-600/30">
+      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+      </svg>
+    </div>
+    <h3 class="text-2xl font-bold text-gradient mb-2">Documentación Fiscal</h3>
+    <p class="text-gray-400">Complete sus identificadores legales y estado civil</p>
+  </div>
+
+  <form [formGroup]="documentationForm" class="space-y-6 animate-fade-in" style="animation-delay: 0.2s; animation-fill-mode: both;">
+    <!-- CUIT -->
+    <div class="space-y-3">
+      <label for="cuit" class="block text-sm font-semibold text-gray-200">
+        CUIT (Clave Única de Identificación Tributaria) <span class="text-red-400">*</span>
+      </label>
+      <input
+        type="text"
+        id="cuit"
+        formControlName="cuit"
+        (input)="formatCUIT($event)"
+        class="input-base"
+        placeholder="XX-XXXXXXXX-X">
+      <div class="text-xs text-gray-500 bg-gray-800/30 px-3 py-2 rounded-md border border-gray-700/30">
+        <strong>Formato requerido:</strong> XX-XXXXXXXX-X (se formatea automáticamente)
+      </div>
+      <div *ngIf="cuit?.invalid && cuit?.touched" class="mt-2 text-sm text-red-400 animate-shake">
+        <div *ngIf="cuit?.errors?.['required']">El CUIT es obligatorio</div>
+        <div *ngIf="cuit?.errors?.['pattern']">El formato del CUIT debe ser XX-XXXXXXXX-X</div>
+      </div>
+    </div>
+
+    <!-- Estado Civil -->
+    <div class="space-y-3">
+      <label for="estadoCivil" class="block text-sm font-semibold text-gray-200">
+        Estado Civil <span class="text-red-400">*</span>
+      </label>
+      <select
+        id="estadoCivil"
+        formControlName="estadoCivil"
+        class="input-base">
+        <option value="" disabled class="bg-gray-800">Seleccione su estado civil</option>
+        <option *ngFor="let estado of estadosCiviles" [value]="estado" class="bg-gray-800">
+          {{ estado }}
+        </option>
+      </select>
+      <div *ngIf="estadoCivil?.invalid && estadoCivil?.touched" class="mt-2 text-sm text-red-400 animate-shake">
+        <div *ngIf="estadoCivil?.errors?.['required']">El estado civil es obligatorio</div>
+      </div>
+    </div>
+  </form>
+</div>

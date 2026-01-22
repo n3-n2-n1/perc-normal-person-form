@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es" class="dark" style="background-color: #000000;">
+<head>
+  <meta charset="utf-8">
+  <title>PERC S.A. - Solicitud de Apertura de Cuenta</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' chrome-extension:;">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Script de inicialización para manejar extensiones de criptomonedas
+    (function() {
+      'use strict';
+
+      // Crear objetos globales seguros antes de que las extensiones intenten acceder
+      if (typeof window !== 'undefined') {
+        // Preparar tronLink
+        if (!window.tronLink) {
+          window.tronLink = {};
+        }
+
+        // Preparar solana
+        if (!window.solana) {
+          window.solana = {};
+        }
+
+        // Preparar tronWeb
+        if (!window.tronWeb) {
+          window.tronWeb = {};
+        }
+
+        // Capturar errores de extensiones antes de que Angular cargue
+        window.addEventListener('error', function(event) {
+          var errorMessage = event.error && event.error.message ? event.error.message : '';
+          var isExtensionError = /tronlink|solana|metamask|phantom|proxy.*trap|injected\.js|solanaActionsContentScript\.js/i.test(errorMessage);
+
+          if (isExtensionError) {
+            console.warn('Extension error intercepted before Angular load:', event.error);
+            event.preventDefault();
+            return false;
+          }
+        });
+
+        // Capturar rejections de promesas de extensiones
+        window.addEventListener('unhandledrejection', function(event) {
+          var reason = event.reason || '';
+          var reasonString = typeof reason === 'object' && reason.message ? reason.message : String(reason);
+          var isExtensionError = /tronlink|solana|metamask|phantom|proxy.*trap/i.test(reasonString);
+
+          if (isExtensionError) {
+            console.warn('Extension promise rejection intercepted:', event.reason);
+            event.preventDefault();
+          }
+        });
+      }
+    })();
+  </script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-blue-950">
+  <div class="fixed inset-0 opacity-20 pointer-events-none">
+    <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.2) 1px, transparent 0); background-size: 40px 40px;"></div>
+  </div>
+  <app-root></app-root>
+</body>
+</html>

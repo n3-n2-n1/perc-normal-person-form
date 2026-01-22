@@ -1,0 +1,14 @@
+{
+  "/api/nominatim/*": {
+    "target": "https://nominatim.openstreetmap.org",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "headers": {
+      "User-Agent": "PERC-Form-App/1.0"
+    },
+    "pathRewrite": {
+      "^/api/nominatim": ""
+    }
+  }
+}

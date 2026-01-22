@@ -1,0 +1,104 @@
+<div class="relative z-10 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Step Indicator -->
+    <div class="sticky top-16 z-40 mb-8 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 pt-4">
+      <app-step-indicator
+        [currentStep]="currentStep"
+        [totalSteps]="steps.length"
+        [stepLabels]="stepLabels"
+        (stepClick)="onStepClick($event)"
+      ></app-step-indicator>
+    </div>
+
+    <!-- Form Container con glassmorphism -->
+    <div class="glass-dark rounded-xl p-8 sm:p-10 lg:p-12 shadow-2xl animate-slide-up">
+      <div class="space-y-8">
+        <!-- Step Content with animations -->
+        <div class="step-container" [ngSwitch]="currentStep">
+          <!-- Step 1: Personal Data -->
+          <div *ngSwitchCase="1" class="animate-fade-in min-h-[400px]">
+            <app-step1-personal-data></app-step1-personal-data>
+          </div>
+
+          <!-- Step 2: Documentation -->
+          <div *ngSwitchCase="2" class="animate-fade-in min-h-[400px]">
+            <app-step2-documentation></app-step2-documentation>
+          </div>
+
+          <!-- Step 3: Address -->
+          <div *ngSwitchCase="3" class="animate-fade-in min-h-[400px]">
+            <app-step3-address></app-step3-address>
+          </div>
+
+          <!-- Step 4: Documents -->
+          <div *ngSwitchCase="4" class="animate-fade-in min-h-[400px]">
+            <app-step4-documents></app-step4-documents>
+          </div>
+
+          <!-- Step 5: Compliance -->
+          <div *ngSwitchCase="5" class="animate-fade-in min-h-[400px]">
+            <app-step5-compliance></app-step5-compliance>
+          </div>
+
+          <!-- Step 6: Final Review -->
+          <div *ngSwitchCase="6" class="animate-fade-in min-h-[400px]">
+            <app-step6-review></app-step6-review>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-gray-700/30">
+          <button
+            *ngIf="currentStep > 1"
+            type="button"
+            (click)="previousStep()"
+            class="px-6 py-3 rounded-lg bg-gray-800/60 hover:bg-gray-700/60 text-gray-300 hover:text-white font-medium transition-all duration-200 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50"
+          >
+            Anterior
+          </button>
+
+          <div class="flex-1"></div>
+
+          <button
+            *ngIf="currentStep < 6"
+            type="button"
+            (click)="nextStep()"
+            [disabled]="!wizardService.isStepValid(currentStep)"
+            [class]="'px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-lg ml-auto flex items-center gap-2 ' +
+              (wizardService.isStepValid(currentStep)
+                ? 'bg-blue-500 hover:bg-blue-400 text-white hover:shadow-xl shadow-blue-500/20'
+                : 'bg-gray-700/50 text-gray-400 cursor-not-allowed shadow-none')"
+            [title]="wizardService.isStepValid(currentStep) ? '' : 'Complete todos los campos requeridos para continuar'"
+          >
+            <span>{{ currentStep === 5 ? 'Revisar y Continuar' : 'Siguiente' }}</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          <button
+            *ngIf="currentStep === 6"
+            type="submit"
+            (click)="onSubmit()"
+            [disabled]="!wizardService.isStepValid(6) || isSubmitting"
+            [class]="'px-6 py-3 rounded-lg bg-blue-500 hover:bg-blue-400 disabled:bg-gray-700/50 disabled:text-gray-500 text-white font-medium transition-all duration-200 shadow-lg hover:shadow-xl disabled:cursor-not-allowed disabled:shadow-none ml-auto relative overflow-hidden flex items-center gap-2 ' +
+              (isSubmitting ? 'animate-shimmer' : '')"
+          >
+            @if (isSubmitting) {
+              <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Procesando...
+            } @else {
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Enviar Formulario
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

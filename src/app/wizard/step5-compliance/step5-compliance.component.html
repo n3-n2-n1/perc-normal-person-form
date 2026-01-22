@@ -1,0 +1,171 @@
+<div class="space-y-8">
+  <div class="text-center mb-8">
+    <h2 class="text-2xl font-bold text-white mb-2">Cumplimiento Normativo</h2>
+    <p class="text-gray-400">Declaraciones juradas obligatorias sobre su situación fiscal y política</p>
+  </div>
+
+  <form [formGroup]="complianceForm" class="space-y-8">
+
+    <!-- FATCA - Declaración Fiscal -->
+    <div class="glass-dark rounded-xl p-6 space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-1">FATCA - Declaración Fiscal</h3>
+          <p class="text-gray-400 text-sm">Referente a obligaciones con Estados Unidos</p>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            formControlName="fatca"
+            class="sr-only peer"
+          >
+          <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+          <span class="ml-3 text-sm font-medium text-gray-300">
+            {{ complianceForm.get('fatca')?.value ? 'Sí aplica' : 'No aplica' }}
+          </span>
+        </label>
+      </div>
+
+      <!-- FATCA Options -->
+      <div *ngIf="complianceForm.get('fatca')?.value" [formGroup]="fatcaOptions" class="space-y-4 pl-4 border-l-2 border-blue-500/30">
+        <div class="space-y-3">
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input
+              type="checkbox"
+              formControlName="usCitizen"
+              class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+            >
+            <span class="text-gray-300">Soy ciudadano o residente fiscal de Estados Unidos</span>
+          </label>
+
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input
+              type="checkbox"
+              formControlName="foreignResident"
+              class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+            >
+            <span class="text-gray-300">Soy residente fiscal de otro país</span>
+          </label>
+
+          <div *ngIf="complianceForm.get('fatcaOptions.foreignResident')?.value" class="ml-7">
+            <label class="block text-sm font-medium text-gray-300 mb-2">
+              País de residencia fiscal *
+            </label>
+            <input
+              type="text"
+              formControlName="foreignCountry"
+              class="input-base"
+              placeholder="Ingrese el país"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PEP - Persona Expuesta Políticamente -->
+    <div class="glass-dark rounded-xl p-6 space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-1">PEP - Persona Expuesta Políticamente</h3>
+          <p class="text-gray-400 text-sm">Referente a funcionarios públicos o familiares directos</p>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            formControlName="pep"
+            class="sr-only peer"
+          >
+          <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+          <span class="ml-3 text-sm font-medium text-gray-300">
+            {{ complianceForm.get('pep')?.value ? 'Sí aplica' : 'No aplica' }}
+          </span>
+        </label>
+      </div>
+
+      <!-- PEP Options -->
+      <div *ngIf="complianceForm.get('pep')?.value" [formGroup]="pepOptions" class="space-y-4 pl-4 border-l-2 border-blue-500/30">
+        <div class="space-y-3">
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input
+              type="checkbox"
+              formControlName="isPep"
+              class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+            >
+            <span class="text-gray-300">Soy o he sido una Persona Expuesta Políticamente</span>
+          </label>
+
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input
+              type="checkbox"
+              formControlName="relatedToPep"
+              class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+            >
+            <span class="text-gray-300">Tengo relación cercana con una PEP (Cónyuge, familiar hasta 2° grado, etc.)</span>
+          </label>
+
+          <div *ngIf="complianceForm.get('pepOptions.isPep')?.value || complianceForm.get('pepOptions.relatedToPep')?.value" class="ml-7 space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">
+                Detalle del cargo o relación *
+              </label>
+              <textarea
+                formControlName="pepDetails"
+                rows="3"
+                class="input-base resize-none"
+                placeholder="Ej: Intendente de..., Hijo de Senador..."
+              ></textarea>
+            </div>
+
+            <div *ngIf="complianceForm.get('pepOptions.relatedToPep')?.value">
+              <label class="block text-sm font-medium text-gray-300 mb-2">
+                Nombre completo del familiar *
+              </label>
+              <input
+                type="text"
+                formControlName="familyMemberName"
+                class="input-base"
+                placeholder="Ingrese el nombre completo del familiar"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OCDE - Intercambio Automático de Información -->
+    <div class="glass-dark rounded-xl p-6 space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-1">OCDE - Intercambio Automático de Información</h3>
+          <p class="text-gray-400 text-sm">Referente a obligaciones fiscales bajo el estándar CRS/OCDE</p>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            formControlName="oecd"
+            class="sr-only peer"
+          >
+          <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+          <span class="ml-3 text-sm font-medium text-gray-300">
+            {{ complianceForm.get('oecd')?.value ? 'Sí aplica' : 'No aplica' }}
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Nota de Confidencialidad -->
+    <div class="glass-dark rounded-xl p-6 border-l-4 border-blue-500/30">
+      <div class="flex items-start gap-3">
+        <svg class="w-6 h-6 text-blue-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+        <div>
+          <h4 class="text-white font-medium mb-2">Confidencialidad</h4>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            Esta información es requerida por normativas AML/CFT. PERC mantiene la máxima confidencialidad y utiliza esta información únicamente para cumplir con las obligaciones legales y regulatorias aplicables.
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

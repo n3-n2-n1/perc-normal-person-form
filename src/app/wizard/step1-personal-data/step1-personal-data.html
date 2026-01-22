@@ -1,0 +1,76 @@
+<div class="space-y-6">
+  <div class="text-center">
+    <h3 class="text-lg font-medium text-white mb-4">Datos Personales</h3>
+    <p class="text-gray-400 text-sm">Complete su información de contacto básica</p>
+  </div>
+
+  <form [formGroup]="personalDataForm" class="space-y-4">
+    <!-- Nombre -->
+    <div>
+      <label for="nombre" class="block text-sm font-medium text-gray-300 mb-1">
+        Nombre <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="nombre"
+        formControlName="nombre"
+        class="input-base"
+        placeholder="Ingrese su nombre">
+      <div *ngIf="nombre?.invalid && nombre?.touched" class="mt-1 text-sm text-red-500">
+        <div *ngIf="nombre?.errors?.['required']">El nombre es obligatorio</div>
+        <div *ngIf="nombre?.errors?.['minlength']">El nombre debe tener al menos 2 caracteres</div>
+      </div>
+    </div>
+
+    <!-- Apellido -->
+    <div>
+      <label for="apellido" class="block text-sm font-medium text-gray-300 mb-1">
+        Apellido <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="apellido"
+        formControlName="apellido"
+        class="input-base"
+        placeholder="Ingrese su apellido">
+      <div *ngIf="apellido?.invalid && apellido?.touched" class="mt-1 text-sm text-red-500">
+        <div *ngIf="apellido?.errors?.['required']">El apellido es obligatorio</div>
+        <div *ngIf="apellido?.errors?.['minlength']">El apellido debe tener al menos 2 caracteres</div>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-300 mb-1">
+        Email <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="input-base"
+        placeholder="correo@ejemplo.com">
+      <div *ngIf="email?.invalid && email?.touched" class="mt-1 text-sm text-red-500">
+        <div *ngIf="email?.errors?.['required']">El email es obligatorio</div>
+        <div *ngIf="email?.errors?.['email']">Ingrese un email válido</div>
+      </div>
+    </div>
+
+    <!-- Teléfono -->
+    <div>
+      <label for="telefono" class="block text-sm font-medium text-gray-300 mb-1">
+        Teléfono <span class="text-red-500">*</span>
+      </label>
+      <input
+        type="tel"
+        id="telefono"
+        formControlName="telefono"
+        class="input-base"
+        placeholder="+54 11 1234-5678">
+      <div *ngIf="telefono?.invalid && telefono?.touched" class="mt-1 text-sm text-red-500">
+        <div *ngIf="telefono?.errors?.['required']">El teléfono es obligatorio</div>
+        <div *ngIf="telefono?.errors?.['pattern']">Ingrese un número de teléfono válido</div>
+      </div>
+    </div>
+  </form>
+</div>

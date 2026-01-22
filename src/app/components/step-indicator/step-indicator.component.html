@@ -1,0 +1,58 @@
+<div class="relative mb-8 glass-dark rounded-xl p-6">
+  <!-- Progress Line -->
+  <div class="absolute top-12 left-6 right-6 h-0.5 bg-gray-800/60 rounded-full z-0">
+    <div
+      class="absolute top-0 left-0 h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full transition-all duration-700 ease-out"
+      [style.width]="getProgressWidth()"
+    ></div>
+  </div>
+
+  <div class="relative flex justify-between items-start">
+    @for (label of stepLabels; track $index) {
+      @let stepNumber = $index + 1;
+      @let stepIsActive = isStepActive(stepNumber);
+      @let stepIsCompleted = isStepCompleted(stepNumber);
+
+      <div class="flex flex-col items-center flex-1 relative z-10">
+        <!-- Step Circle -->
+        <button
+          type="button"
+          (click)="onStepClick(stepNumber)"
+          [class]="'relative w-12 h-12 rounded-full flex items-center justify-center font-semibold text-base transition-all duration-300 ' +
+            (stepIsActive
+              ? 'bg-green-500 text-white scale-105 shadow-lg shadow-green-500/40 ring-2 ring-green-400/50 cursor-pointer hover:scale-110'
+              : stepIsCompleted
+              ? 'bg-green-600/90 text-white cursor-pointer hover:bg-green-500 hover:scale-105'
+              : 'bg-gray-800/60 backdrop-blur-sm border border-gray-700/50 text-gray-400 cursor-pointer hover:bg-gray-700/60 hover:border-gray-600/50 hover:scale-105')"
+          [title]="'Ir al paso ' + stepNumber"
+        >
+          @if (stepIsCompleted) {
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+            </svg>
+          } @else {
+            <span [class]="stepIsActive ? 'text-white' : 'text-gray-400'">
+              {{ stepNumber }}
+            </span>
+          }
+        </button>
+
+        <!-- Step Label -->
+        <button
+          type="button"
+          (click)="onStepClick(stepNumber)"
+          class="mt-3 text-center max-w-[120px]"
+          [class]="'text-xs font-medium transition-all duration-300 leading-tight ' +
+            (stepIsActive
+              ? 'text-white font-semibold cursor-pointer'
+              : stepIsCompleted
+              ? 'text-green-400 cursor-pointer hover:text-green-300'
+              : 'text-gray-400 cursor-pointer hover:text-gray-300')"
+          [title]="'Ir al paso ' + stepNumber"
+        >
+          {{ label }}
+        </button>
+      </div>
+    }
+  </div>
+</div>

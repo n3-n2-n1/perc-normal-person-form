@@ -1,0 +1,121 @@
+<div class="space-y-8">
+  <div class="text-center animate-slide-up">
+    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-600 to-green-500 rounded-full mb-4 shadow-lg shadow-green-600/30">
+      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      </svg>
+    </div>
+    <h3 class="text-2xl font-bold text-gradient mb-2">Domicilio</h3>
+    <p class="text-gray-400">Complete su ubicación física para completar el registro</p>
+  </div>
+
+  <form [formGroup]="addressForm" class="space-y-6 animate-fade-in" style="animation-delay: 0.2s; animation-fill-mode: both;">
+    <!-- Dirección -->
+    <div class="space-y-2">
+      <label class="block text-sm font-semibold text-gray-200">
+        Dirección <span class="text-red-400">*</span>
+      </label>
+      <app-address-autocomplete
+        [formGroup]="addressForm"
+        streetField="calle"
+        numberField="numero"
+        postalCodeField="codigoPostal"
+        cityField="ciudad"
+        provinceField="provincia"
+        placeholder="Buscar dirección completa...">
+      </app-address-autocomplete>
+      <div class="text-xs text-gray-500 bg-gray-800/30 px-3 py-2 rounded-md border border-gray-700/30 mt-2">
+        <strong>Ejemplos:</strong> "Calle Falsa 123", "Av. Libertador 456", "Bv. San Juan 789"
+      </div>
+    </div>
+
+    <!-- Calle -->
+    <div class="space-y-2">
+      <label for="calle" class="block text-sm font-semibold text-gray-200">
+        Calle <span class="text-red-400">*</span>
+      </label>
+      <input
+        type="text"
+        id="calle"
+        formControlName="calle"
+        class="input-base"
+        placeholder="Ej: Av. Corrientes">
+      <div *ngIf="calle?.invalid && calle?.touched" class="mt-2 text-sm text-red-400 animate-shake">
+        <div *ngIf="calle?.errors?.['required']">La calle es obligatoria</div>
+        <div *ngIf="calle?.errors?.['minlength']">La calle debe tener al menos 3 caracteres</div>
+      </div>
+    </div>
+
+    <!-- Número -->
+    <div class="space-y-2">
+      <label for="numero" class="block text-sm font-semibold text-gray-200">
+        Número <span class="text-red-400">*</span>
+      </label>
+      <input
+        type="text"
+        id="numero"
+        formControlName="numero"
+        class="input-base"
+        placeholder="Ej: 1234">
+      <div *ngIf="numero?.invalid && numero?.touched" class="mt-2 text-sm text-red-400 animate-shake">
+        <div *ngIf="numero?.errors?.['required']">El número es obligatorio</div>
+        <div *ngIf="numero?.errors?.['pattern']">El número debe contener solo dígitos</div>
+      </div>
+    </div>
+
+    <!-- Ciudad -->
+    <div class="space-y-2">
+      <label for="ciudad" class="block text-sm font-semibold text-gray-200">
+        Ciudad/Localidad <span class="text-red-400">*</span>
+      </label>
+      <app-autocomplete-select
+        [control]="ciudad"
+        [options]="ciudades"
+        placeholder="Buscar y seleccionar ciudad o localidad">
+      </app-autocomplete-select>
+      <div class="text-xs text-gray-500 bg-gray-800/30 px-3 py-2 rounded-md border border-gray-700/30 mt-2">
+        <strong>Sugerencia:</strong> Si no encuentra su ciudad, puede escribirla manualmente después de hacer click en el campo.
+      </div>
+      <div *ngIf="ciudad?.invalid && ciudad?.touched" class="mt-2 text-sm text-red-400 animate-shake">
+        <div *ngIf="ciudad?.errors?.['required']">La ciudad es obligatoria</div>
+        <div *ngIf="ciudad?.errors?.['minlength']">La ciudad debe tener al menos 2 caracteres</div>
+      </div>
+    </div>
+
+    <!-- Provincia -->
+    <div class="space-y-2">
+      <label for="provincia" class="block text-sm font-semibold text-gray-200">
+        Provincia <span class="text-red-400">*</span>
+      </label>
+      <app-autocomplete-select
+        [control]="provincia"
+        [options]="provincias"
+        placeholder="Buscar y seleccionar provincia">
+      </app-autocomplete-select>
+      <div *ngIf="provincia?.invalid && provincia?.touched" class="mt-2 text-sm text-red-400 animate-shake">
+        <div *ngIf="provincia?.errors?.['required']">La provincia es obligatoria</div>
+      </div>
+    </div>
+
+    <!-- Código Postal -->
+    <div class="space-y-2">
+      <label for="codigoPostal" class="block text-sm font-semibold text-gray-200">
+        Código Postal <span class="text-red-400">*</span>
+      </label>
+      <input
+        type="text"
+        id="codigoPostal"
+        formControlName="codigoPostal"
+        class="input-base"
+        placeholder="Ej: 1001 o 1425">
+      <div class="text-xs text-gray-500 bg-gray-800/30 px-3 py-2 rounded-md border border-gray-700/30">
+        <strong>Nota:</strong> Ingrese el código postal de 4 o 5 dígitos correspondiente a su localidad
+      </div>
+      <div *ngIf="codigoPostal?.invalid && codigoPostal?.touched" class="mt-2 text-sm text-red-400 animate-shake">
+        <div *ngIf="codigoPostal?.errors?.['required']">El código postal es obligatorio</div>
+        <div *ngIf="codigoPostal?.errors?.['pattern']">El código postal debe tener 4 o 5 dígitos</div>
+      </div>
+    </div>
+  </form>
+</div>
