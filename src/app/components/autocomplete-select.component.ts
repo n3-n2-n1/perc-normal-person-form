@@ -9,7 +9,7 @@ import { SelectOption } from '../types/types';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <div class="relative" #dropdownRef>
+    <div class="relative overflow-visible" #dropdownRef>
       <div class="relative">
         <input
           type="text"
@@ -23,7 +23,7 @@ import { SelectOption } from '../types/types';
           [placeholder]="placeholder"
         />
         @if (isOpen && filteredOptions.length > 0) {
-          <div class="absolute z-50 w-full mt-1 max-h-60 overflow-auto rounded-lg bg-gray-900/95 border border-gray-700/50 backdrop-blur-md shadow-lg custom-scrollbar">
+          <div class="absolute z-[9999] w-full mt-1 max-h-60 overflow-auto rounded-lg bg-gray-900/98 border border-gray-700/50 shadow-xl custom-scrollbar">
             @for (option of filteredOptions; track option.value) {
               <div
                 (click)="handleSelect(option.value)"
@@ -35,7 +35,7 @@ import { SelectOption } from '../types/types';
           </div>
         }
         @if (isOpen && searchTerm && filteredOptions.length === 0) {
-          <div class="absolute z-50 w-full mt-1 rounded-lg bg-gray-900/95 border border-gray-700/50 backdrop-blur-md shadow-lg">
+          <div class="absolute z-[9999] w-full mt-1 rounded-lg bg-gray-900/98 border border-gray-700/50 shadow-xl">
             <div class="px-4 py-2 text-gray-400 text-sm">
               No se encontraron resultados
             </div>
@@ -47,7 +47,7 @@ import { SelectOption } from '../types/types';
       }
       @if (isOpen) {
         <div
-          class="fixed inset-0 z-40"
+          class="fixed inset-0 z-[9998]"
           (click)="isOpen = false"
         ></div>
       }

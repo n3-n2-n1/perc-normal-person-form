@@ -23,28 +23,24 @@
         class="input-base"
         placeholder="XX-XXXXXXXX-X">
       <div class="text-xs text-gray-500 bg-gray-800/30 px-3 py-2 rounded-md border border-gray-700/30">
-        <strong>Formato requerido:</strong> XX-XXXXXXXX-X (se formatea automáticamente)
+        <strong>Ingresá tu CUIT con guiones:</strong> (XX-XXXXXXXX-X)
       </div>
       <div *ngIf="cuit?.invalid && cuit?.touched" class="mt-2 text-sm text-red-400 animate-shake">
         <div *ngIf="cuit?.errors?.['required']">El CUIT es obligatorio</div>
-        <div *ngIf="cuit?.errors?.['pattern']">El formato del CUIT debe ser XX-XXXXXXXX-X</div>
+        <div *ngIf="cuit?.errors?.['pattern']">Ingresá tu CUIT con guiones (XX-XXXXXXXX-X)</div>
       </div>
     </div>
 
     <!-- Estado Civil -->
     <div class="space-y-3">
-      <label for="estadoCivil" class="block text-sm font-semibold text-gray-200">
+      <label class="block text-sm font-semibold text-gray-200">
         Estado Civil <span class="text-red-400">*</span>
       </label>
-      <select
-        id="estadoCivil"
-        formControlName="estadoCivil"
-        class="input-base">
-        <option value="" disabled class="bg-gray-800">Seleccione su estado civil</option>
-        <option *ngFor="let estado of estadosCiviles" [value]="estado" class="bg-gray-800">
-          {{ estado }}
-        </option>
-      </select>
+      <app-autocomplete-select
+        [control]="estadoCivil"
+        [options]="estadosCiviles"
+        placeholder="Seleccione su estado civil">
+      </app-autocomplete-select>
       <div *ngIf="estadoCivil?.invalid && estadoCivil?.touched" class="mt-2 text-sm text-red-400 animate-shake">
         <div *ngIf="estadoCivil?.errors?.['required']">El estado civil es obligatorio</div>
       </div>

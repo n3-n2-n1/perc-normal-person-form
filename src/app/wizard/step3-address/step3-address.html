@@ -108,13 +108,13 @@
         id="codigoPostal"
         formControlName="codigoPostal"
         class="input-base"
-        placeholder="Ej: 1001 o 1425">
+        placeholder="Ej: 1001, B1663, 1425-ABC">
       <div class="text-xs text-gray-500 bg-gray-800/30 px-3 py-2 rounded-md border border-gray-700/30">
-        <strong>Nota:</strong> Ingrese el código postal de 4 o 5 dígitos correspondiente a su localidad
+        <strong>Nota:</strong> Ingrese el código postal correspondiente a su localidad
       </div>
       <div *ngIf="codigoPostal?.invalid && codigoPostal?.touched" class="mt-2 text-sm text-red-400 animate-shake">
         <div *ngIf="codigoPostal?.errors?.['required']">El código postal es obligatorio</div>
-        <div *ngIf="codigoPostal?.errors?.['pattern']">El código postal debe tener 4 o 5 dígitos</div>
+        <div *ngIf="codigoPostal?.errors?.['pattern']">El código postal debe tener entre 3 y 10 caracteres (letras, números, espacios y guiones)</div>
       </div>
     </div>
   </form>

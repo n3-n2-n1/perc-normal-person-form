@@ -139,7 +139,7 @@ export class Step3Address implements OnInit {
       numero: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       ciudad: ['', [Validators.required, Validators.minLength(2)]],
       provincia: ['', Validators.required],
-      codigoPostal: ['', [Validators.required, Validators.pattern(/^\d{4,5}$/)]],
+      codigoPostal: ['', [Validators.required, Validators.pattern(/^[A-Za-z0-9\s\-]{3,10}$/)]],
     });
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { WizardService } from '../../services/wizard';
+import { SelectOption } from '../../types/types';
 
 @Component({
   selector: 'app-step2-documentation',
@@ -10,14 +11,14 @@ import { WizardService } from '../../services/wizard';
 })
 export class Step2Documentation implements OnInit {
   documentationForm: FormGroup;
-  estadosCiviles = [
-    'Soltero/a',
-    'Casado/a',
-    'Divorciado/a',
-    'Viudo/a',
-    'Separado/a',
-    'Unión Civil',
-    'Unión de Hecho'
+  estadosCiviles: SelectOption[] = [
+    { value: 'Soltero/a', label: 'Soltero/a' },
+    { value: 'Casado/a', label: 'Casado/a' },
+    { value: 'Divorciado/a', label: 'Divorciado/a' },
+    { value: 'Viudo/a', label: 'Viudo/a' },
+    { value: 'Separado/a', label: 'Separado/a' },
+    { value: 'Unión Civil', label: 'Unión Civil' },
+    { value: 'Unión de Hecho', label: 'Unión de Hecho' }
   ];
 
   constructor(
@@ -46,7 +47,7 @@ export class Step2Documentation implements OnInit {
   }
 
   get cuit() { return this.documentationForm.get('cuit'); }
-  get estadoCivil() { return this.documentationForm.get('estadoCivil'); }
+  get estadoCivil() { return this.documentationForm.get('estadoCivil') as FormControl; }
 
   formatCUIT(event: any): void {
     let value = event.target.value.replace(/\D/g, '');

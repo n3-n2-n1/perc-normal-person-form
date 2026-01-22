@@ -66,7 +66,7 @@
             [disabled]="!wizardService.isStepValid(currentStep)"
             [class]="'px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-lg ml-auto flex items-center gap-2 ' +
               (wizardService.isStepValid(currentStep)
-                ? 'bg-blue-500 hover:bg-blue-400 text-white hover:shadow-xl shadow-blue-500/20'
+                ? 'bg-gray-600 hover:bg-gray-500 text-white hover:shadow-xl shadow-gray-600/20'
                 : 'bg-gray-700/50 text-gray-400 cursor-not-allowed shadow-none')"
             [title]="wizardService.isStepValid(currentStep) ? '' : 'Complete todos los campos requeridos para continuar'"
           >
@@ -81,7 +81,7 @@
             type="submit"
             (click)="onSubmit()"
             [disabled]="!wizardService.isStepValid(6) || isSubmitting"
-            [class]="'px-6 py-3 rounded-lg bg-blue-500 hover:bg-blue-400 disabled:bg-gray-700/50 disabled:text-gray-500 text-white font-medium transition-all duration-200 shadow-lg hover:shadow-xl disabled:cursor-not-allowed disabled:shadow-none ml-auto relative overflow-hidden flex items-center gap-2 ' +
+            [class]="'px-6 py-3 rounded-lg bg-gray-600 hover:bg-gray-500 disabled:bg-gray-700/50 disabled:text-gray-500 text-white font-medium transition-all duration-200 shadow-lg hover:shadow-xl disabled:cursor-not-allowed disabled:shadow-none ml-auto relative overflow-hidden flex items-center gap-2 ' +
               (isSubmitting ? 'animate-shimmer' : '')"
           >
             @if (isSubmitting) {
